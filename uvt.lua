@@ -14,6 +14,15 @@ end
 timer:start(1000, 0, f)
 --]]
 
+-- Create a new signal handler
+local sigint = uv.new_signal()
+-- Define a handler function
+uv.signal_start(sigint, "sigint", function(signal)
+    print("got " .. signal .. ", shutting down")
+    uv.stop()
+    -- os.exit()
+end)
+
 print("Sleeping");
 
 -- Simple echo program
@@ -47,8 +56,11 @@ end)
 -- When there are no longer any active handles, it will return
 uv.run()
 
+
 --[[
 -- You must always close your uv handles or you'll leak memory
 -- We can't depend on the GC since it doesn't know enough about libuv.
 timer:close()
 --]]
+
+print("End")
