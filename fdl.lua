@@ -13,5 +13,12 @@ if (not url) then
     os.exit()
 end
 
+path_to_save = os.date("%Y%m%d-%H%M%S")
+if (arg[2] and arg[2] ~= "") then
+    path_to_save = arg[2]
+end
+
+print("Download: " .. url)
 -- curl URL -o path/to/save
-os.execute("curl " .. tostring(url) .. " -o dl-" .. os.date("%Y%m%d-%H%M%S"))
+os.execute("curl " .. tostring(url) .. " -o " .. path_to_save)
+print("Saved to: " .. path_to_save)
