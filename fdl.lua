@@ -1,8 +1,6 @@
--- download file at the url
+-- download file
 
 curl = require("lcurl")
-
-remote_url = arg[1]
 
 usage = [[
 url [path/to/save]
@@ -36,12 +34,14 @@ c = curl.easy{
 c:setopt_writefunction(f)
 c:setopt_progressfunction(p)
 
-print("Download: " .. remote_url)
+c:perform()
 -- curl URL -o path/to/save
 --os.execute("curl " .. tostring(url) .. " -o " .. path_to_save)
-c:perform()
+
+print("Download: " .. remote_url)
 print("Saved to: " .. path_to_save)
 
 c:close()
 f:close()
+
 print("Done")
