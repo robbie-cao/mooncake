@@ -52,6 +52,21 @@ local after = function (...)
 end
 
 local work = uv.new_work(download, after)
+do
+    -- Inspect what's inside
+    print(work, type(work))
+    local inspect = require("inspect")
+    print(inspect(getmetatable(work)))
+    --[[
+    -- {
+    --   __gc = <function 1>,
+    --   __index = {
+    --     queue = <function 2>
+    --   },
+    --   __tostring = <function 3>
+    -- }
+    --]]
+end
 
 local stdin = uv.new_tty(0, true)
 
@@ -72,6 +87,9 @@ stdin:read_start(function (err, data)
             print("--STOP--")
         elseif string.find(data, "quit") then
             print("QUIT")
+            -- Try to cancel the work before exit
+            -- But currently it seems to luv not support as cannot get uv_req_t handle
+            --uv.cancel(work)
             uv.stop()
         else
             print("--UNKNOWN--")
@@ -98,3 +116,5 @@ uv.run()
 uv.loop_close()
 
 print("End")
+
+os.exit()
