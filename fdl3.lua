@@ -11,9 +11,24 @@ download = function (url, path, ...)
         path_to_save = path
     end
 
-    f = assert(io.open(path_to_save, "w"))
-    p = function ()
-        print("#")
+    w = assert(io.open(path_to_save, "w"))
+    p = function (...)
+        -- Callback for progress
+        ---[[
+        print("#", ...)
+        --]]
+    end
+    h = function (...)
+        -- Callback on receiving header
+        --[[
+        print("H", ...)
+        --]]
+    end
+    r = function (...)
+        -- Callback for read
+        ---[[
+        print("R", ...)
+        --]]
     end
 
     curl = require("lcurl")
@@ -35,7 +50,9 @@ download = function (url, path, ...)
         [curl.OPT_NOPROGRESS] = false;
     })
     --]]
-    c:setopt_writefunction(f)
+    c:setopt_headerfunction(h)
+    c:setopt_writefunction(w)
+    c:setopt_readfunction(r)
     c:setopt_progressfunction(p)
 
     c:perform()
@@ -44,7 +61,7 @@ download = function (url, path, ...)
     print("Saved to: " .. path_to_save)
 
     c:close()
-    f:close()
+    w:close()
 
 end
 
