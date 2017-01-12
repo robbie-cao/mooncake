@@ -31,6 +31,7 @@ local function chat_recv(name)
 
     client.ON_MESSAGE = function(mid, topic, payload)
         print("Receive messge: ", topic, payload)
+        cmd:send("ack", topic)
     end
 
     client:connect(BROKER)
@@ -54,7 +55,8 @@ local function chat_send(name)
 
     client:connect(BROKER)
     while true do
-        local key, val = cmd:receive("msg")    -- timeout in seconds
+        local key, val = cmd:receive("msg")
+        print("Linda receive: ", key, val)
         if val == nil then
             print("timed out")
             break
@@ -62,6 +64,13 @@ local function chat_send(name)
         print(tostring(cmd) .. " msg: " .. val)
         -- Publish input message to MQTT broker
         client:publish(MSM_TOPIC_DOMAIN, val)
+        key, val = cmd:receive(3.0, "ack")
+        print("Linda receive: ", key, val)
+        if val == nil then
+            print("timed out to receive ack thru linda")
+        else
+            print("Ack thru linda: ", val)
+        end
     end
 end
 
