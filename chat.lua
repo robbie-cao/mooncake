@@ -37,8 +37,6 @@ local function chat_recv(name)
     client:loop_forever()
 end
 
-print("XXX")
-
 -- Chat sender
 local function chat_send(name)
     local mqtt = require("mosquitto")
@@ -55,17 +53,29 @@ local function chat_send(name)
     end
 
     client:connect(BROKER)
+    while true do
+        local key, val = cmd:receive("msg")    -- timeout in seconds
+        if val == nil then
+            print("timed out")
+            break
+        end
+        print(tostring(cmd) .. " msg: " .. val)
+        -- Publish input message to MQTT broker
+        client:publish(MSM_TOPIC_DOMAIN, val)
+    end
+end
 
+local function input(name)
     -- Use luv(libuv) to receive input from stdin
     local uv = require('luv')
     local stdin = uv.new_tty(0, true)
 
+    print("Start input", name)
     stdin:read_start(function (err, data)
         assert(not err, err)
         if data then
             print("Input: ", data)
-            -- Publish input message to MQTT broker
-            client:publish(MSM_TOPIC_DOMAIN, data)
+            cmd:send("msg", data)
         else
             stdin:close()
         end
@@ -77,11 +87,13 @@ local function chat_send(name)
     uv.loop_close()
 end
 
-b = lanes.gen("*", chat_send)("B")
 a = lanes.gen("*", chat_recv)("A")
+b = lanes.gen("*", chat_send)("B")
+c = lanes.gen("*", input)("C")
 
 a:join()
 b:join()
+c:join()
 
 print("After join")
 
