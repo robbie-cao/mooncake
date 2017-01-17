@@ -55,6 +55,23 @@ Lua 5.3.3 Copyright (C) 1994-2016 Lua.org, PUC-Rio
 
 - [Lanes](http://lualanes.github.io/lanes/)
 - [Lua-cURL](https://github.com/Lua-cURL/Lua-cURLv3)
+- [luaposix](https://luarocks.org/modules/gvvaughan/luaposix)
+- [lua-mosquitto](https://luarocks.org/modules/karlp/lua-mosquitto)
+- [dkjson](https://luarocks.org/modules/dhkolf/dkjson)
+- [lua-cjson](https://luarocks.org/modules/luarocks/lua-cjson)
+- [luv](https://luarocks.org/modules/creationix/luv)
+- [inspect](https://luarocks.org/modules/kikito/inspect)
+
+```
+sudo luarocks install lanes
+sudo luarocks install lua-curl
+sudo luarocks install luaposix
+sudo luarocks install lua-mosquitto
+sudo luarocks install dkjson
+sudo luarocks install lua-cjson
+sudo luarocks install luv
+sudo luarocks install inspect
+```
 
 ## Reference
 
