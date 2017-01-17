@@ -2,7 +2,7 @@ local json = require ("dkjson")
 
 local P = print
 if true or arg[1] == "off" then
-    print = function (...)
+    print0 = function (...)
     end
 end
 
@@ -185,6 +185,9 @@ else
     print(obj.widget.window.title, obj.widget.window.name, obj.widget.window.width, obj.widget.window.height)
     print(obj.widget.image.src, obj.widget.image.name, obj.widget.image.hOffset, obj.widget.image.vOffset, obj.widget.image.alignment)
     print(obj.widget.text.data, obj.widget.text.size, obj.widget.text.style, obj.widget.text.name, obj.widget.text.hOffset, obj.widget.text.vOffset, obj.widget.text.alignment, obj.widget.text.onMouseUp)
+
+    require("pl")
+    pretty.dump(obj)
 end
 
 print = P
