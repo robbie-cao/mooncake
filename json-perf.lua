@@ -5,21 +5,27 @@ function print_timestamp(tag)
     print(tag, string.format("%08d.%06d", t.sec, t.usec))
 end
 
-local t = nil
 local count = 100000000
+local t1, t2
 
 print_timestamp("CJSON - Start")
+t1 = os.clock()
 for i = 1, count do
     require("json-cjson")
 end
 print_timestamp("CJSON - End")
+t2 = os.clock()
+print ("Time:", t2 - t1)
 
 
+t1 = os.clock()
 print_timestamp("dkjson - Start")
 for i = 1, count do
     require("json-dk")
 end
 print_timestamp("dkjson - End")
+t2 = os.clock()
+print ("Time:", t2 - t1)
 
 --[[
 --
