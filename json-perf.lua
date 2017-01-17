@@ -1,30 +1,25 @@
-local posix = require("posix")
+function print_timestamp(tag)
+    local posix = require("posix")
+    local t = posix.gettimeofday()
+
+    print(tag, string.format("%08d.%06d", t.sec, t.usec))
+end
 
 local t = nil
 local count = 100000000
 
-print("CJSON")
-t = posix.gettimeofday()
-print("Start", string.format("%08d.%06d", t.sec, t.usec))
-
+print_timestamp("CJSON - Start")
 for i = 1, count do
     require("json-cjson")
 end
-
-t = posix.gettimeofday()
-print("End", string.format("%08d.%06d", t.sec, t.usec))
+print_timestamp("CJSON - End")
 
 
-print("dkjson")
-t = posix.gettimeofday()
-print("Start", string.format("%08d.%06d", t.sec, t.usec))
-
+print_timestamp("dkjson - Start")
 for i = 1, count do
     require("json-dk")
 end
-
-t = posix.gettimeofday()
-print("End", string.format("%08d.%06d", t.sec, t.usec))
+print_timestamp("dkjson - End")
 
 --[[
 --
