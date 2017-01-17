@@ -1,5 +1,7 @@
 local json = require ("cjson")
 
+local P = function (...) end
+
 local tbl = {
     animals = { "dog", "cat", "aardvark" },
     instruments = { "violin", "trombone", "theremin" },
@@ -9,7 +11,7 @@ local tbl = {
 
 local str = json.encode (tbl)
 
-print (str)
+P (str)
 
 
 local tbl = {
@@ -33,7 +35,7 @@ local tbl = {
 
 local str = json.encode (tbl)
 
-print (str)
+P (str)
 
 
 local str = [[
@@ -45,11 +47,11 @@ local str = [[
 
 local obj = json.decode(str)
 if not obj then
-    print ("Error")
+    P ("Error")
 else
-    print ("currency", obj.currency)
+    P ("currency", obj.currency)
     for i = 1, #obj.numbers do
-        print(i, obj.numbers[i])
+        P(i, obj.numbers[i])
     end
 end
 
@@ -80,25 +82,25 @@ local str = [[
 
 local obj = json.decode(str)
 if not obj then
-    print ("Error:")
+    P ("Error:")
 else
-    print ("glossary", obj.glossary)
+    P ("glossary", obj.glossary)
     do
         inspect = require("inspect")
-        print(inspect(getmetatable(obj.glossary)))
+        P(inspect(getmetatable(obj.glossary)))
     end
-    print(obj.glossary.Title)
-    print(obj.glossary.GlossDiv.Title)
-    print(obj.glossary.GlossDiv.GlossList.GlossEntry.ID)
-    print(obj.glossary.GlossDiv.GlossList.GlossEntry.SortAs)
-    print(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossTerm)
-    print(obj.glossary.GlossDiv.GlossList.GlossEntry.Acronym)
-    print(obj.glossary.GlossDiv.GlossList.GlossEntry.Abbrev)
-    print(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossDef.Para)
+    P(obj.glossary.Title)
+    P(obj.glossary.GlossDiv.Title)
+    P(obj.glossary.GlossDiv.GlossList.GlossEntry.ID)
+    P(obj.glossary.GlossDiv.GlossList.GlossEntry.SortAs)
+    P(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossTerm)
+    P(obj.glossary.GlossDiv.GlossList.GlossEntry.Acronym)
+    P(obj.glossary.GlossDiv.GlossList.GlossEntry.Abbrev)
+    P(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossDef.Para)
     for i = 1, #obj.glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso do
-        print(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso[i])
+        P(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso[i])
     end
-    print(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossSee)
+    P(obj.glossary.GlossDiv.GlossList.GlossEntry.GlossSee)
 end
 
 
@@ -120,17 +122,17 @@ local str = [[
 
 local obj = json.decode(str)
 if not obj then
-    print ("Error:")
+    P ("Error:")
 else
-    print ("menu", obj.menu)
+    P ("menu", obj.menu)
     do
         inspect = require("inspect")
-        print(inspect(getmetatable(obj.menu)))
+        P(inspect(getmetatable(obj.menu)))
     end
-    print(obj.menu.id)
-    print(obj.menu.value)
+    P(obj.menu.id)
+    P(obj.menu.value)
     for i = 1, #obj.menu.popup.menuitem do
-        print(obj.menu.popup.menuitem[i].value, obj.menu.popup.menuitem[i].onclick)
+        P(obj.menu.popup.menuitem[i].value, obj.menu.popup.menuitem[i].onclick)
     end
 end
 
@@ -168,15 +170,15 @@ local str = [[
 
 local obj = json.decode(str)
 if not obj then
-    print ("Error:")
+    P ("Error:")
 else
-    print ("widget", obj.widget)
+    P ("widget", obj.widget)
     do
         inspect = require("inspect")
-        print(inspect(getmetatable(obj.widget)))
+        P(inspect(getmetatable(obj.widget)))
     end
-    print(obj.widget.debug)
-    print(obj.widget.window.title, obj.widget.window.name, obj.widget.window.width, obj.widget.window.height)
-    print(obj.widget.image.src, obj.widget.image.name, obj.widget.image.hOffset, obj.widget.image.vOffset, obj.widget.image.alignment)
-    print(obj.widget.text.data, obj.widget.text.size, obj.widget.text.style, obj.widget.text.name, obj.widget.text.hOffset, obj.widget.text.vOffset, obj.widget.text.alignment, obj.widget.text.onMouseUp)
+    P(obj.widget.debug)
+    P(obj.widget.window.title, obj.widget.window.name, obj.widget.window.width, obj.widget.window.height)
+    P(obj.widget.image.src, obj.widget.image.name, obj.widget.image.hOffset, obj.widget.image.vOffset, obj.widget.image.alignment)
+    P(obj.widget.text.data, obj.widget.text.size, obj.widget.text.style, obj.widget.text.name, obj.widget.text.hOffset, obj.widget.text.vOffset, obj.widget.text.alignment, obj.widget.text.onMouseUp)
 end

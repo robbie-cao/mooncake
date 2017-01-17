@@ -1,5 +1,11 @@
 local json = require ("dkjson")
 
+local P = print
+if true or arg[1] == "off" then
+    print = function (...)
+    end
+end
+
 local tbl = {
     animals = { "dog", "cat", "aardvark" },
     instruments = { "violin", "trombone", "theremin" },
@@ -181,3 +187,4 @@ else
     print(obj.widget.text.data, obj.widget.text.size, obj.widget.text.style, obj.widget.text.name, obj.widget.text.hOffset, obj.widget.text.vOffset, obj.widget.text.alignment, obj.widget.text.onMouseUp)
 end
 
+print = P
